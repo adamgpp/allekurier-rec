@@ -17,11 +17,17 @@ final class CommandBus implements CommandBusInterface
         try {
             $this->bus->dispatch($command);
         } catch (\Throwable $e) {
-            while (false === $e instanceof \DomainException) {
+            while (true) {
+                if ($e instanceof \DomainException) {
+                    throw $e;
+                }
+
+                if (null === $e->getPrevious()) {
+                    throw $e;
+                }
+
                 $e = $e->getPrevious();
             }
-
-            throw $e;
         }
     }
 }

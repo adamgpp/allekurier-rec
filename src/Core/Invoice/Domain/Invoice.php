@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core\Invoice\Domain;
 
-use App\Common\EventManager\EventsCollectorTrait;
-use App\Core\Invoice\Domain\Event\InvoiceCanceledEvent;
-use App\Core\Invoice\Domain\Event\InvoiceCreatedEvent;
 use App\Core\Invoice\Domain\Status\InvoiceStatus;
 use App\Core\Invoice\Domain\ValueObject\Amount;
 use App\Core\User\Domain\User;
@@ -15,8 +14,6 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Table(name: 'invoices')]
 class Invoice
 {
-    use EventsCollectorTrait;
-
     #[ORM\Id]
     #[ORM\Column(type: 'ulid', unique: true)]
     private Ulid $id;
@@ -37,19 +34,11 @@ class Invoice
         $this->user = $user;
         $this->amount = $amount->value;
         $this->status = InvoiceStatus::NEW;
-
-        $this->record(new InvoiceCreatedEvent($this));
     }
 
     public function getId(): Ulid
     {
         return $this->id;
-    }
-
-    public function cancel(): void
-    {
-        $this->status = InvoiceStatus::CANCELED;
-        $this->record(new InvoiceCanceledEvent($this));
     }
 
     public function getUser(): User

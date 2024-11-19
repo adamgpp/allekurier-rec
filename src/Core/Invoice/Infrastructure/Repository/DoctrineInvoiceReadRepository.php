@@ -9,6 +9,7 @@ use App\Core\Invoice\Domain\Repository\InvoiceReadRepositoryInterface;
 use App\Core\Invoice\Domain\Status\InvoiceStatus;
 use App\Core\Invoice\Domain\ValueObject\Amount;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Uid\Ulid;
 
 final class DoctrineInvoiceReadRepository implements InvoiceReadRepositoryInterface
 {
@@ -33,5 +34,17 @@ final class DoctrineInvoiceReadRepository implements InvoiceReadRepositoryInterf
             ->setParameter('invoice_amount', $amount->value)
             ->getQuery()
             ->getArrayResult();
+    }
+
+    public function existsById(Ulid $id): bool
+    {
+        return false === empty($this->entityManager
+                ->createQueryBuilder()
+                ->select('i')
+                ->from(Invoice::class, 'i')
+                ->where('i.id = :invoice_id')
+                ->setParameter('invoice_id', $id->toBinary())
+                ->getQuery()
+                ->getArrayResult());
     }
 }

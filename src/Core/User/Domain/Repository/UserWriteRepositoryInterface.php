@@ -13,5 +13,5 @@ interface UserWriteRepositoryInterface
 
     public function flush(): void;
 
-    public function getByEmail(Email $email): User;
+    public function findByEmail(Email $email): ?User;
 }

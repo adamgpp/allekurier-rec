@@ -4,27 +4,20 @@ declare(strict_types=1);
 
 namespace App\Core\Invoice\Application\Command\CreateInvoice;
 
-use App\Core\Invoice\Domain\Invoice;
-use App\Core\Invoice\Domain\Repository\InvoiceWriteRepositoryInterface;
-use App\Core\User\Domain\Repository\UserWriteRepositoryInterface;
+use App\Core\Invoice\Domain\Feature\InvoiceCreationInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
 final class CreateInvoiceHandler
 {
     public function __construct(
-        private readonly InvoiceWriteRepositoryInterface $invoiceWriteRepository,
-        private readonly UserWriteRepositoryInterface $userRepository
-    ) {}
+        private readonly InvoiceCreationInterface $invoiceCreator,
+    )
+    {
+    }
 
     public function __invoke(CreateInvoiceCommand $command): void
     {
-        $this->invoiceWriteRepository->save(new Invoice(
-            $command->id,
-            $this->userRepository->getByEmail($command->email),
-            $command->amount
-        ));
-
-        $this->invoiceWriteRepository->flush();
+        $this->invoiceCreator->createInvoice($command->id, $command->userEmail, $command->amount);
     }
 }

@@ -40,7 +40,7 @@ final class CreateUser extends Command
         } catch (\DomainException $e) {
             $output->writeln($e->getMessage());
 
-            return Command::INVALID;
+            return Command::FAILURE;
         }
     }
 

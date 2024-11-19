@@ -43,7 +43,7 @@ final class CreateInvoiceHandlerTest extends TestCase
         $invoice = new Invoice(new Ulid(), $user, new Amount(12500));
 
         $this->userRepository->expects(self::once())
-            ->method('getByEmail')
+            ->method('findByEmail')
             ->willReturn($user);
 
         $this->invoiceRepository->expects(self::once())
@@ -65,7 +65,7 @@ final class CreateInvoiceHandlerTest extends TestCase
         $this->expectException(UserNotFoundException::class);
 
         $this->userRepository->expects(self::once())
-            ->method('getByEmail')
+            ->method('findByEmail')
             ->willThrowException(new UserNotFoundException());
 
         $this->handler->__invoke(

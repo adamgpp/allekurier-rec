@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Core\User\Infrastructure\Persistance;
 
 use App\Core\Common\Domain\ValueObject\Email;
-use App\Core\User\Domain\Exception\UserNotFoundException;
 use App\Core\User\Domain\Repository\UserWriteRepositoryInterface;
 use App\Core\User\Domain\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,9 +27,9 @@ final class DoctrineUserWriteRepository implements UserWriteRepositoryInterface
         $this->entityManager->flush();
     }
 
-    public function getByEmail(Email $email): User
+    public function findByEmail(Email $email): ?User
     {
-        $user = $this->entityManager->createQueryBuilder()
+        return $this->entityManager->createQueryBuilder()
             ->select('u')
             ->from(User::class, 'u')
             ->where('u.email = :user_email')
@@ -38,11 +37,5 @@ final class DoctrineUserWriteRepository implements UserWriteRepositoryInterface
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
-
-        if (null === $user) {
-            throw new UserNotFoundException('Użytkownik nie istnieje');
-        }
-
-        return $user;
     }
 }

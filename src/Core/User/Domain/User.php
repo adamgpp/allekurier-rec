@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core\User\Domain;
 
 use App\Core\Common\Domain\ValueObject\Email;
@@ -28,8 +30,18 @@ class User
         $this->status = UserStatus::INACTIVE;
     }
 
+    public function getId(): Ulid
+    {
+        return $this->id;
+    }
+
     public function getEmail(): Email
     {
         return new Email($this->email);
+    }
+
+    public function isActive(): bool
+    {
+        return UserStatus::INACTIVE === $this->status;
     }
 }
