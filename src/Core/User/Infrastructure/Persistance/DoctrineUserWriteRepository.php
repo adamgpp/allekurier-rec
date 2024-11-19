@@ -9,13 +9,11 @@ use App\Core\User\Domain\Exception\UserNotFoundException;
 use App\Core\User\Domain\Repository\UserWriteRepositoryInterface;
 use App\Core\User\Domain\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\EventDispatcher\EventDispatcherInterface;
 
 final class DoctrineUserWriteRepository implements UserWriteRepositoryInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly EventDispatcherInterface $eventDispatcher
     )
     {
     }
@@ -23,11 +21,6 @@ final class DoctrineUserWriteRepository implements UserWriteRepositoryInterface
     public function save(User $user): void
     {
         $this->entityManager->persist($user);
-
-        $events = $user->pullEvents();
-        foreach ($events as $event) {
-            $this->eventDispatcher->dispatch($event);
-        }
     }
 
     public function flush(): void

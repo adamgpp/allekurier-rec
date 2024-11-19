@@ -2,9 +2,7 @@
 
 namespace App\Core\User\Domain;
 
-use App\Common\EventManager\EventsCollectorTrait;
 use App\Core\Common\Domain\ValueObject\Email;
-use App\Core\User\Domain\Event\UserCreatedEvent;
 use App\Core\User\Domain\Status\UserStatus;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Ulid;
@@ -13,8 +11,6 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\Table(name: 'users')]
 class User
 {
-    use EventsCollectorTrait;
-
     #[ORM\Id]
     #[ORM\Column(type: 'ulid', unique: true)]
     private Ulid $id;
@@ -30,8 +26,6 @@ class User
         $this->id = $id;
         $this->email = $email->value;
         $this->status = UserStatus::INACTIVE;
-
-        $this->record(new UserCreatedEvent($this));
     }
 
     public function getEmail(): Email
