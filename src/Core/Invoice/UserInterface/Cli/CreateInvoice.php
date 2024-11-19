@@ -38,7 +38,7 @@ class CreateInvoice extends Command
             $input->getArgument('amount')
         ));
 
-        $output->writeln('A new user has been successfully created.');
+        $output->writeln('A new invoice has been successfully created.');
 
         return Command::SUCCESS;
     }
