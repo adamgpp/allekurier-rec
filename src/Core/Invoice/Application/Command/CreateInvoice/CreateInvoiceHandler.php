@@ -8,10 +8,9 @@ use App\Core\Invoice\Domain\Invoice;
 use App\Core\Invoice\Domain\Repository\InvoiceRepositoryInterface;
 use App\Core\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Symfony\Component\Uid\Ulid;
 
 #[AsMessageHandler]
-class CreateInvoiceHandler
+final class CreateInvoiceHandler
 {
     public function __construct(
         private readonly InvoiceRepositoryInterface $invoiceRepository,
@@ -21,7 +20,7 @@ class CreateInvoiceHandler
     public function __invoke(CreateInvoiceCommand $command): void
     {
         $this->invoiceRepository->save(new Invoice(
-            new Ulid(),
+            $command->id,
             $this->userRepository->getByEmail($command->email),
             $command->amount
         ));

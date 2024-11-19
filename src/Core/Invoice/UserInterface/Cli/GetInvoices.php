@@ -6,6 +6,7 @@ use App\Common\Bus\QueryBusInterface;
 use App\Core\Invoice\Application\DTO\InvoiceDTO;
 use App\Core\Invoice\Application\Query\GetInvoicesByStatusAndAmountGreater\GetInvoicesByStatusAndAmountGreaterQuery;
 use App\Core\Invoice\Domain\Status\InvoiceStatus;
+use App\Core\Invoice\Domain\ValueObject\Amount;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,7 +29,7 @@ class GetInvoices extends Command
         /** @var InvoiceDTO $invoice */
         $invoices = $this->bus->dispatch(new GetInvoicesByStatusAndAmountGreaterQuery(
             InvoiceStatus::from($input->getArgument('status')),
-            $input->getArgument('amount'),
+            new Amount((int) $input->getArgument('amount')),
         ));
 
         $this->displayResult($output, ...$invoices);

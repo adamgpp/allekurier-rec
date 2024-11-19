@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Uid\Ulid;
 
 #[AsCommand(
     name: 'app:user:create',
@@ -35,9 +36,11 @@ final class CreateUser extends Command
             return Command::INVALID;
         }
 
-        $this->bus->dispatch(new CreateUserCommand($email));
+        $id = new Ulid();
 
-        $output->writeln('A new user has been successfully created.');
+        $this->bus->dispatch(new CreateUserCommand($id, $email));
+
+        $output->writeln(sprintf('A new user has been created. ID: %s.', $id->toRfc4122()));
 
         return Command::SUCCESS;
     }
