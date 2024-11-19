@@ -42,10 +42,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # sciagniecie composera
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
-# skopiowanie skryptu wait-for-it
-COPY docker/build/php/wait-for-it.sh /usr/bin/wait-for-it
-RUN chmod +x /usr/bin/wait-for-it
-
 WORKDIR /var/www/html
 
 # Set the locale
@@ -54,6 +50,5 @@ WORKDIR /var/www/html
 #ENV LANGUAGE en_US:en
 #ENV LC_ALL en_US.UTF-8
 
-# wait-for-it czeka na wystartowanie mysql aby zrobic migracje
 # apache2-foreground odpala apache
-CMD composer install ; wait-for-it mysql:3306 -t 120 -- bin/console doctrine:migrations:migrate -n ; apache2-foreground
+CMD apache2-foreground
