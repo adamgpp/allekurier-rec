@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Common\EventManager;
 
 trait EventsCollectorTrait
@@ -14,10 +16,7 @@ trait EventsCollectorTrait
         $this->events[] = $event;
     }
 
-    /**
-     * @param EventInterface[] $events
-     */
-    public function recordMulti(array $events): void
+    public function recordMulti(EventInterface ...$events): void
     {
         foreach ($events as $event) {
             $this->record($event);

@@ -2,8 +2,8 @@
 
 namespace App\Core\Invoice\Application\EventListener;
 
+use App\Core\Common\Domain\Notification\NotificationInterface;
 use App\Core\Invoice\Domain\Event\InvoiceCreatedEvent;
-use App\Core\Invoice\Domain\Notification\NotificationInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SendEmailInvoiceCreatedEventSubscriberListener implements EventSubscriberInterface

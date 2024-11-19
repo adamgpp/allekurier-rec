@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core\Invoice\Infrastructure\Persistance;
 
 use App\Core\Invoice\Domain\Invoice;
