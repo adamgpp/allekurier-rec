@@ -4,31 +4,29 @@ namespace App\Core\User\Domain;
 
 use App\Common\EventManager\EventsCollectorTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Ulid;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="users")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'users')]
 class User
 {
     use EventsCollectorTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private ?int $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'ulid', unique: true)]
+    private Ulid $id;
 
-    /**
-     * @ORM\Column(type="string", length=300, nullable=false)
-     */
+    #[ORM\Column(type: 'string', length: 300, nullable: false)]
     private string $email;
 
-    public function __construct(string $email)
+    #[ORM\Column(type: 'string', nullable: false, enumType: UserStatus::class)]
+    private UserStatus $status;
+
+    public function __construct(Ulid $id, string $email)
     {
-        $this->id = null;
+        $this->id = $id;
         $this->email = $email;
+        $this->status = UserStatus::INACTIVE;
     }
 
     public function getEmail(): string

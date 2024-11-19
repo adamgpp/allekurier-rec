@@ -9,49 +9,35 @@ use App\Core\Invoice\Domain\Exception\InvoiceException;
 use App\Core\Invoice\Domain\Status\InvoiceStatus;
 use App\Core\User\Domain\User;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Ulid;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="invoices")
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'invoices')]
 class Invoice
 {
     use EventsCollectorTrait;
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private ?int $id;
+    #[ORM\Id]
+    #[ORM\Column(type: 'ulid', unique: true)]
+    private Ulid $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Core\User\Domain\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private User $user;
 
-    /**
-     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
-     */
+    #[ORM\Column(type: 'integer', nullable: false, options: ['unsigned' => true])]
     private int $amount;
 
-    /**
-     * @ORM\Column(type="string", length=16, nullable=false, enumType="\App\Core\Invoice\Domain\Status\InvoiceStatus")
-     */
+    #[ORM\Column(type: 'string', length: 16, nullable: false, enumType: InvoiceStatus::class)]
     private InvoiceStatus $status;
 
-    /**
-     * @param User $user
-     * @param int $amount
-     */
-    public function __construct(User $user, int $amount)
+    public function __construct(Ulid $id, User $user, int $amount)
     {
         if ($amount <= 0) {
             throw new InvoiceException('Kwota faktury musi być większa od 0');
         }
 
-        $this->id = null;
+        $this->id = $id;
         $this->user = $user;
         $this->amount = $amount;
         $this->status = InvoiceStatus::NEW;
@@ -59,7 +45,7 @@ class Invoice
         $this->record(new InvoiceCreatedEvent($this));
     }
 
-    public function getId(): ?int
+    public function getId(): Ulid
     {
         return $this->id;
     }
