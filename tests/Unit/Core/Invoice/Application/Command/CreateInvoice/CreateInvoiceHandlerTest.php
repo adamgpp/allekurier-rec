@@ -6,10 +6,10 @@ use App\Core\Common\Domain\ValueObject\Email;
 use App\Core\Invoice\Application\Command\CreateInvoice\CreateInvoiceCommand;
 use App\Core\Invoice\Application\Command\CreateInvoice\CreateInvoiceHandler;
 use App\Core\Invoice\Domain\Invoice;
-use App\Core\Invoice\Domain\Repository\InvoiceRepositoryInterface;
+use App\Core\Invoice\Domain\Repository\InvoiceWriteRepositoryInterface;
 use App\Core\Invoice\Domain\ValueObject\Amount;
 use App\Core\User\Domain\Exception\UserNotFoundException;
-use App\Core\User\Domain\Repository\UserRepositoryInterface;
+use App\Core\User\Domain\Repository\UserWriteRepositoryInterface;
 use App\Core\User\Domain\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -17,9 +17,9 @@ use Symfony\Component\Uid\Ulid;
 
 final class CreateInvoiceHandlerTest extends TestCase
 {
-    private UserRepositoryInterface&MockObject $userRepository;
+    private UserWriteRepositoryInterface&MockObject $userRepository;
 
-    private InvoiceRepositoryInterface&MockObject $invoiceRepository;
+    private InvoiceWriteRepositoryInterface&MockObject $invoiceRepository;
 
     private CreateInvoiceHandler $handler;
 
@@ -29,10 +29,10 @@ final class CreateInvoiceHandlerTest extends TestCase
 
         $this->handler = new CreateInvoiceHandler(
             $this->invoiceRepository = $this->createMock(
-                InvoiceRepositoryInterface::class
+                InvoiceWriteRepositoryInterface::class
             ),
             $this->userRepository = $this->createMock(
-                UserRepositoryInterface::class
+                UserWriteRepositoryInterface::class
             )
         );
     }

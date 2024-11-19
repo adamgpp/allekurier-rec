@@ -6,17 +6,34 @@ namespace App\Core\User\Infrastructure\Persistance;
 
 use App\Core\Common\Domain\ValueObject\Email;
 use App\Core\User\Domain\Exception\UserNotFoundException;
-use App\Core\User\Domain\Repository\UserRepositoryInterface;
+use App\Core\User\Domain\Repository\UserWriteRepositoryInterface;
 use App\Core\User\Domain\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-class DoctrineUserRepository implements UserRepositoryInterface
+final class DoctrineUserWriteRepository implements UserWriteRepositoryInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly EventDispatcherInterface $eventDispatcher
-    ) {}
+    )
+    {
+    }
+
+    public function save(User $user): void
+    {
+        $this->entityManager->persist($user);
+
+        $events = $user->pullEvents();
+        foreach ($events as $event) {
+            $this->eventDispatcher->dispatch($event);
+        }
+    }
+
+    public function flush(): void
+    {
+        $this->entityManager->flush();
+    }
 
     public function getByEmail(Email $email): User
     {
@@ -34,20 +51,5 @@ class DoctrineUserRepository implements UserRepositoryInterface
         }
 
         return $user;
-    }
-
-    public function save(User $user): void
-    {
-        $this->entityManager->persist($user);
-
-        $events = $user->pullEvents();
-        foreach ($events as $event) {
-            $this->eventDispatcher->dispatch($event);
-        }
-    }
-
-    public function flush(): void
-    {
-        $this->entityManager->flush();
     }
 }

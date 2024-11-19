@@ -7,7 +7,7 @@ namespace App\Tests\Unit\Core\User\Application\Command\CreateUser;
 use App\Core\Common\Domain\ValueObject\Email;
 use App\Core\User\Application\Command\CreateUser\CreateUserCommand;
 use App\Core\User\Application\Command\CreateUser\CreateUserHandler;
-use App\Core\User\Domain\Repository\UserRepositoryInterface;
+use App\Core\User\Domain\Repository\UserWriteRepositoryInterface;
 use App\Core\User\Domain\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -15,12 +15,12 @@ use Symfony\Component\Uid\Ulid;
 
 final class CreateUserHandlerTest extends TestCase
 {
-    private UserRepositoryInterface&MockObject $userRepository;
+    private UserWriteRepositoryInterface&MockObject $userRepository;
     private CreateUserHandler $handler;
 
     protected function setUp(): void
     {
-        $this->userRepository = $this->createMock(UserRepositoryInterface::class);
+        $this->userRepository = $this->createMock(UserWriteRepositoryInterface::class);
         $this->handler = new CreateUserHandler($this->userRepository);
     }
 

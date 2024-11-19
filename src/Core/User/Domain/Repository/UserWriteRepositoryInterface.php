@@ -1,19 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core\User\Domain\Repository;
 
 use App\Core\Common\Domain\ValueObject\Email;
-use App\Core\User\Domain\Exception\UserNotFoundException;
 use App\Core\User\Domain\User;
 
-interface UserRepositoryInterface
+interface UserWriteRepositoryInterface
 {
-    /**
-     * @throws UserNotFoundException
-     */
-    public function getByEmail(Email $email): User;
-
     public function save(User $user): void;
 
     public function flush(): void;
+
+    public function getByEmail(Email $email): User;
 }

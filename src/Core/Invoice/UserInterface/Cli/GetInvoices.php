@@ -3,7 +3,7 @@
 namespace App\Core\Invoice\UserInterface\Cli;
 
 use App\Common\Bus\QueryBusInterface;
-use App\Core\Invoice\Application\DTO\InvoiceDTO;
+use App\Core\Invoice\Application\Query\GetInvoicesByStatusAndAmountGreater\DTO\InvoiceId;
 use App\Core\Invoice\Application\Query\GetInvoicesByStatusAndAmountGreater\GetInvoicesByStatusAndAmountGreaterQuery;
 use App\Core\Invoice\Domain\Status\InvoiceStatus;
 use App\Core\Invoice\Domain\ValueObject\Amount;
@@ -26,7 +26,7 @@ class GetInvoices extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var InvoiceDTO $invoice */
+        /** @var array<InvoiceId> $invoices */
         $invoices = $this->bus->dispatch(new GetInvoicesByStatusAndAmountGreaterQuery(
             InvoiceStatus::from($input->getArgument('status')),
             new Amount((int) $input->getArgument('amount')),
@@ -43,7 +43,7 @@ class GetInvoices extends Command
         $this->addArgument('amount', InputArgument::REQUIRED);
     }
 
-    private function displayResult(OutputInterface $output, InvoiceDTO ...$invoices): void
+    private function displayResult(OutputInterface $output, InvoiceId ...$invoices): void
     {
         foreach ($invoices as $invoice) {
             $output->writeln($invoice->id->toRfc4122());
