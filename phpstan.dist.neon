@@ -1,0 +1,7 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    ignoreErrors:
+        - '#Method .*::\w+\(\) has parameter \$.* with no value type specified in iterable type array#'
+        - '#Method .*::\w+\(\) return type has no value type specified in iterable type array#'

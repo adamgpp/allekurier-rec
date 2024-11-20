@@ -2,8 +2,8 @@
 
 namespace App\Core\Invoice\Application\EventListener;
 
+use App\Core\Common\Domain\Notification\NotificationInterface;
 use App\Core\Invoice\Domain\Event\InvoiceCreatedEvent;
-use App\Core\Invoice\Domain\Notification\NotificationInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class SendEmailInvoiceCreatedEventSubscriberListener implements EventSubscriberInterface
@@ -14,6 +14,7 @@ class SendEmailInvoiceCreatedEventSubscriberListener implements EventSubscriberI
 
     public function send(InvoiceCreatedEvent $event): void
     {
+        // It should be done via another command handler.
         $this->mailer->sendEmail(
             $event->invoice->getUser()->getEmail(),
             'Utworzono fakturę',
@@ -24,7 +25,7 @@ class SendEmailInvoiceCreatedEventSubscriberListener implements EventSubscriberI
     public static function getSubscribedEvents(): array
     {
         return [
-            InvoiceCreatedEvent::class => 'send'
+            InvoiceCreatedEvent::class => 'send',
         ];
     }
 }

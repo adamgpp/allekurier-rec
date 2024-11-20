@@ -3,8 +3,10 @@
 namespace App\Core\Invoice\UserInterface\Cli;
 
 use App\Common\Bus\QueryBusInterface;
-use App\Core\Invoice\Application\DTO\InvoiceDTO;
+use App\Core\Invoice\Application\Query\GetInvoicesByStatusAndAmountGreater\DTO\InvoiceId;
 use App\Core\Invoice\Application\Query\GetInvoicesByStatusAndAmountGreater\GetInvoicesByStatusAndAmountGreaterQuery;
+use App\Core\Invoice\Domain\Status\InvoiceStatus;
+use App\Core\Invoice\Domain\ValueObject\Amount;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -24,14 +26,13 @@ class GetInvoices extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var array<InvoiceId> $invoices */
         $invoices = $this->bus->dispatch(new GetInvoicesByStatusAndAmountGreaterQuery(
-            $input->getArgument('amount')
+            InvoiceStatus::from($input->getArgument('status')),
+            new Amount((int) $input->getArgument('amount')),
         ));
 
-        /** @var InvoiceDTO $invoice */
-        foreach ($invoices as $invoice) {
-            $output->writeln($invoice->id);
-        }
+        $this->displayResult($output, ...$invoices);
 
         return Command::SUCCESS;
     }
@@ -40,5 +41,12 @@ class GetInvoices extends Command
     {
         $this->addArgument('status', InputArgument::REQUIRED);
         $this->addArgument('amount', InputArgument::REQUIRED);
+    }
+
+    private function displayResult(OutputInterface $output, InvoiceId ...$invoices): void
+    {
+        foreach ($invoices as $invoice) {
+            $output->writeln($invoice->id->toRfc4122());
+        }
     }
 }

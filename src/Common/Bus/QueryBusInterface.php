@@ -8,9 +8,6 @@ interface QueryBusInterface
      * Dispatches the given message.
      *
      * @param object $message
-     * @param array  $stamps
-     *
-     * @return mixed
      */
-    public function dispatch($message, array $stamps = []);
+    public function dispatch($message, array $stamps = []): mixed;
 }

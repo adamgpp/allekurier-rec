@@ -14,10 +14,10 @@ class QueryBus implements QueryBusInterface
         $this->queryBus = $queryBus;
     }
 
-    public function dispatch($message, array $stamps = [])
+    public function dispatch($message, array $stamps = []): mixed
     {
         $envelope = $this->queryBus->dispatch($message);
 
-        return $envelope->last(HandledStamp::class)->getResult();
+        return $envelope->last(HandledStamp::class)?->getResult();
     }
 }
