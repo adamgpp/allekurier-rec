@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\User\Infrastructure\Persistance;
+namespace App\Core\User\Infrastructure\Repository;
 
 use App\Core\Common\Domain\ValueObject\Email;
 use App\Core\User\Domain\Repository\UserReadRepositoryInterface;
@@ -31,16 +31,18 @@ final class DoctrineUserReadRepository implements UserReadRepositoryInterface
             ->getArrayResult();
     }
 
-    public function existsByEmail(Email $userEmail): bool
+    public function findByEmail(Email $email): array
     {
-        return false === empty($this->entityManager
+        $result = $this->entityManager
             ->createQueryBuilder()
             ->select('u')
             ->from(User::class, 'u')
             ->where('u.email = :user_email')
-            ->setParameter('user_email', $userEmail->value)
+            ->setParameter('user_email', $email->value)
             ->getQuery()
-            ->getArrayResult());
+            ->getArrayResult();
+
+        return $result[0] ?? [];
     }
 
     public function existsById(Ulid $id): bool

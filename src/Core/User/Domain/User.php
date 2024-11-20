@@ -42,6 +42,14 @@ class User
 
     public function isActive(): bool
     {
-        return UserStatus::INACTIVE === $this->status;
+        return UserStatus::ACTIVE === $this->status;
+    }
+
+    /**
+     * Only for testing purposes. In a real world this should be triggered inside domain feature, ex. via CLI command.
+     */
+    public function activate(): void
+    {
+        $this->status = UserStatus::ACTIVE;
     }
 }

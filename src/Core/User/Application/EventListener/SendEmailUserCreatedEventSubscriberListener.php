@@ -14,6 +14,7 @@ final class SendEmailUserCreatedEventSubscriberListener implements EventSubscrib
     {
     }
 
+    // It should be done via another command handler.
     public function send(UserCreatedEvent $event): void
     {
         $this->mailer->sendEmail(

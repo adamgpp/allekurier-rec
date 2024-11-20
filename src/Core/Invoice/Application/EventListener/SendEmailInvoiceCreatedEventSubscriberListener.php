@@ -14,6 +14,7 @@ class SendEmailInvoiceCreatedEventSubscriberListener implements EventSubscriberI
 
     public function send(InvoiceCreatedEvent $event): void
     {
+        // It should be done via another command handler.
         $this->mailer->sendEmail(
             $event->invoice->getUser()->getEmail(),
             'Utworzono fakturę',

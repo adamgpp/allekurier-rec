@@ -12,7 +12,7 @@ interface UserReadRepositoryInterface
 {
     public function findByStatus(UserStatus $status): array;
 
-    public function existsByEmail(Email $userEmail): bool;
+    public function findByEmail(Email $email): array;
 
     public function existsById(Ulid $id): bool;
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Core\Invoice\UserInterface\Cli;
 
 use App\Common\Bus\CommandBusInterface;
@@ -11,6 +13,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Uid\Ulid;
 
 #[AsCommand(
@@ -26,6 +29,8 @@ class CreateInvoice extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $style = new SymfonyStyle($input, $output);
+
         try {
             $email = new Email($input->getArgument('email'));
             $amount = new Amount((int) $input->getArgument('amount'));
@@ -34,11 +39,11 @@ class CreateInvoice extends Command
 
             $this->bus->dispatch(new CreateInvoiceCommand($id, $email, $amount));
 
-            $output->writeln(sprintf('A new invoice has been created. ID: %s.', $id->toRfc4122()));
+            $style->success(sprintf('A new invoice has been created. ID: %s.', $id->toRfc4122()));
 
             return Command::SUCCESS;
         } catch (\DomainException $e) {
-            $output->writeln($e->getMessage());
+            $style->warning($e->getMessage());
 
             return Command::FAILURE;
         }

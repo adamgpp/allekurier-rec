@@ -12,6 +12,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Uid\Ulid;
 
 #[AsCommand(
@@ -27,6 +28,8 @@ final class CreateUser extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $style = new SymfonyStyle($input, $output);
+
         try {
             $email = new Email($input->getArgument('email'));
 
@@ -34,11 +37,11 @@ final class CreateUser extends Command
 
             $this->bus->dispatch(new CreateUserCommand($id, $email));
 
-            $output->writeln(sprintf('A new user has been created. ID: %s.', $id->toRfc4122()));
+            $style->success(sprintf('A new user has been created. ID: %s.', $id->toRfc4122()));
 
             return Command::SUCCESS;
         } catch (\DomainException $e) {
-            $output->writeln($e->getMessage());
+            $style->warning($e->getMessage());
 
             return Command::FAILURE;
         }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Invoice\Domain\Feature\Exception;
+namespace App\Core\Invoice\Application\Service\Exception;
 
 use App\Core\Common\Domain\ValueObject\Email;
 use Symfony\Component\Uid\Ulid;
@@ -17,7 +17,7 @@ final class InvoiceCreationException extends \DomainException
         ));
     }
 
-    public static function userNotActive(Ulid $userId): self
+    public static function userIsNotActive(Ulid $userId): self
     {
         return new self(sprintf(
             'User with ID `%s` is not active.',

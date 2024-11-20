@@ -41,6 +41,14 @@ class Invoice
         return $this->id;
     }
 
+    /**
+     * Only for testing purposes. In a real world this should be triggered inside domain feature, ex. via CLI command.
+     */
+    public function cancel(): void
+    {
+        $this->status = InvoiceStatus::CANCELED;
+    }
+
     public function getUser(): User
     {
         return $this->user;
