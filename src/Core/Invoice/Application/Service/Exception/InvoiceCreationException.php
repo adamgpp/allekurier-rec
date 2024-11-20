@@ -28,7 +28,7 @@ final class InvoiceCreationException extends \DomainException
     public static function userWithEmailNotExists(Email $email): self
     {
         return new self(sprintf(
-            'User with email `%s` not exists.',
+            'User with email `%s` does not exist.',
             $email->value,
         ));
     }

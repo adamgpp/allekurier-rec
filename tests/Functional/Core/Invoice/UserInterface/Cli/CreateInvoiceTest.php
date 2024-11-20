@@ -100,7 +100,7 @@ final class CreateInvoiceTest extends KernelTestCase
 
         self::assertSame(Command::FAILURE, $this->commandTester->getStatusCode());
         self::assertStringContainsString(
-            'User with email `some-valid-but-nonexistent-test@email.com` not exists.',
+            'User with email `some-valid-but-nonexistent-test@email.com` does not exist.',
             $this->commandTester->getDisplay(),
         );
     }

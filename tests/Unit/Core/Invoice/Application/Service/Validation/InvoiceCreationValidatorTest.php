@@ -90,7 +90,7 @@ final class InvoiceCreationValidatorTest extends TestCase
             ->willReturn([]);
 
         $this->expectException(InvoiceCreationException::class);
-        $this->expectExceptionMessage("User with email `{$userEmail->value}` not exists.");
+        $this->expectExceptionMessage("User with email `{$userEmail->value}` does not exist.");
 
         $this->validator->assertInvoiceCanBeCreated($invoiceId, $userEmail);
     }
