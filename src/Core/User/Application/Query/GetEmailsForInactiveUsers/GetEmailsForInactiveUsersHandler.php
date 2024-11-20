@@ -23,6 +23,6 @@ final class GetEmailsForInactiveUsersHandler
     {
         $users = $this->userRepository->findByStatus(UserStatus::INACTIVE);
 
-        return array_map(static fn(array $user) => new UserEmail($user['email']), $users);
+        return array_map(static fn (array $user) => new UserEmail($user['email']), $users);
     }
 }

@@ -17,8 +17,7 @@ final class CreateInvoiceCommand implements CommandInterface
     public function __construct(
         public readonly Ulid $id,
         public readonly Email $userEmail,
-        public readonly Amount $amount
-    )
-    {
+        public readonly Amount $amount,
+    ) {
     }
 }

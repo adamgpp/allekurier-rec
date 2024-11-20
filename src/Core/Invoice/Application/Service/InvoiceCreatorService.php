@@ -12,6 +12,7 @@ use App\Core\Invoice\Domain\Invoice;
 use App\Core\Invoice\Domain\Repository\InvoiceWriteRepositoryInterface;
 use App\Core\Invoice\Domain\ValueObject\Amount;
 use App\Core\User\Domain\Repository\UserWriteRepositoryInterface;
+use App\Core\User\Domain\User;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Uid\Ulid;
 
@@ -22,14 +23,14 @@ final class InvoiceCreatorService implements InvoiceCreationInterface
         private readonly UserWriteRepositoryInterface $userRepository,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly InvoiceCreationValidationInterface $invoiceCreationValidator,
-    )
-    {
+    ) {
     }
 
     public function createInvoice(Ulid $id, Email $userEmail, Amount $amount): void
     {
         $this->invoiceCreationValidator->assertInvoiceCanBeCreated($id, $userEmail);
 
+        /** @var User $user */
         $user = $this->userRepository->findByEmail($userEmail);
 
         $invoice = new Invoice($id, $user, $amount);

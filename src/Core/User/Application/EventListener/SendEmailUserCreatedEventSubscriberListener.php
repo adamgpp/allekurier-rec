@@ -24,11 +24,10 @@ final class SendEmailUserCreatedEventSubscriberListener implements EventSubscrib
         );
     }
 
-
     public static function getSubscribedEvents(): array
     {
         return [
-            UserCreatedEvent::class => 'send'
+            UserCreatedEvent::class => 'send',
         ];
     }
 }

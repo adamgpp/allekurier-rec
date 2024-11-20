@@ -16,8 +16,7 @@ final class InvoiceCreationValidator implements InvoiceCreationValidationInterfa
     public function __construct(
         private readonly InvoiceReadRepositoryInterface $invoiceReadRepository,
         private readonly UserReadRepositoryInterface $userReadRepository,
-    )
-    {
+    ) {
     }
 
     public function assertInvoiceCanBeCreated(Ulid $invoiceId, Email $userEmail): void

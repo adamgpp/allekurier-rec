@@ -26,7 +26,7 @@ class Invoice
     private int $amount;
 
     #[ORM\Column(type: 'string', length: 16, nullable: false, enumType: InvoiceStatus::class)]
-    private InvoiceStatus $status;
+    private InvoiceStatus $status; // @phpstan-ignore-line
 
     public function __construct(Ulid $id, User $user, Amount $amount)
     {

@@ -12,8 +12,7 @@ final class CreateUserHandler
 {
     public function __construct(
         private readonly UserCreationInterface $userCreator,
-    )
-    {
+    ) {
     }
 
     public function __invoke(CreateUserCommand $command): void

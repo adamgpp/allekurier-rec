@@ -15,13 +15,9 @@ final class DoctrineInvoiceReadRepository implements InvoiceReadRepositoryInterf
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getInvoicesWithGreaterAmountAndStatus(Amount $amount, InvoiceStatus $invoiceStatus): array
     {
         return $this->entityManager

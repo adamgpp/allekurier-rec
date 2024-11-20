@@ -10,7 +10,6 @@ final class InvoiceId
 {
     public function __construct(
         public readonly Ulid $id,
-    )
-    {
+    ) {
     }
 }

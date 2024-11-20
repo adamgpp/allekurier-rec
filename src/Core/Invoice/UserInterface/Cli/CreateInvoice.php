@@ -32,7 +32,7 @@ class CreateInvoice extends Command
         $style = new SymfonyStyle($input, $output);
 
         try {
-            $email = new Email($input->getArgument('email'));
+            $email = new Email((string) $input->getArgument('email'));
             $amount = new Amount((int) $input->getArgument('amount'));
 
             $id = new Ulid();

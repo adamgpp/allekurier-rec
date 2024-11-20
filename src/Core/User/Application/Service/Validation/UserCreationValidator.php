@@ -13,8 +13,7 @@ final class UserCreationValidator implements UserCreationValidationInterface
 {
     public function __construct(
         private readonly UserReadRepositoryInterface $userReadRepository,
-    )
-    {
+    ) {
     }
 
     public function assertUserCanBeCreated(Ulid $userId, Email $userEmail): void

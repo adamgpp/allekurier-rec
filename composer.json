@@ -58,7 +58,9 @@
     ],
     "post-update-cmd": [
       "@auto-scripts"
-    ]
+    ],
+    "fix": "./vendor/bin/php-cs-fixer fix src",
+    "phpstan": "./vendor/bin/phpstan analyse -c phpstan.dist.neon"
   },
   "conflict": {
     "symfony/symfony": "*"
@@ -71,6 +73,8 @@
   },
   "require-dev": {
     "dama/doctrine-test-bundle": "^8.2",
+    "friendsofphp/php-cs-fixer": "^3.64",
+    "phpstan/phpstan": "^2.0",
     "phpunit/phpunit": "^9.5",
     "symfony/browser-kit": "6.3.*",
     "symfony/css-selector": "6.3.*",

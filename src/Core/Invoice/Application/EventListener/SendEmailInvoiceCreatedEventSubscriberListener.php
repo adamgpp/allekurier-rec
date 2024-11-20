@@ -25,7 +25,7 @@ class SendEmailInvoiceCreatedEventSubscriberListener implements EventSubscriberI
     public static function getSubscribedEvents(): array
     {
         return [
-            InvoiceCreatedEvent::class => 'send'
+            InvoiceCreatedEvent::class => 'send',
         ];
     }
 }

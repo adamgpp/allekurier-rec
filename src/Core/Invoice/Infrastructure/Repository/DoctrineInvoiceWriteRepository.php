@@ -12,8 +12,7 @@ final class DoctrineInvoiceWriteRepository implements InvoiceWriteRepositoryInte
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function save(Invoice $invoice): void

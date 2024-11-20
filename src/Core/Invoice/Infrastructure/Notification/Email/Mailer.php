@@ -12,7 +12,6 @@ class Mailer implements NotificationInterface
     {
     }
 
-
     public function sendEmail(Email $recipient, string $subject, string $message): void
     {
         $this->SMPTMailer->send($recipient->value, $subject, $message);

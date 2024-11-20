@@ -13,8 +13,7 @@ final class DoctrineUserWriteRepository implements UserWriteRepositoryInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function save(User $user): void

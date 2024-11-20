@@ -16,7 +16,6 @@ final class CreateUserCommand implements CommandInterface
     public function __construct(
         public readonly Ulid $id,
         public readonly Email $email,
-    )
-    {
+    ) {
     }
 }

@@ -19,8 +19,7 @@ final class UserCreatorService implements UserCreationInterface
         private readonly UserWriteRepositoryInterface $userWriteRepository,
         private readonly UserCreationValidationInterface $userCreationValidator,
         private readonly EventDispatcherInterface $eventDispatcher,
-    )
-    {
+    ) {
     }
 
     public function createUser(Ulid $id, Email $email): void

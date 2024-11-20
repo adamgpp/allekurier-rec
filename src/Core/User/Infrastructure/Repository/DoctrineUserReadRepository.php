@@ -15,8 +15,7 @@ final class DoctrineUserReadRepository implements UserReadRepositoryInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function findByStatus(UserStatus $status): array
