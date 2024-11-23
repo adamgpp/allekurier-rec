@@ -7,7 +7,7 @@ namespace App\Tests\Unit\Core\User\Application\Command\CreateUser;
 use App\Core\Common\Domain\ValueObject\Email;
 use App\Core\User\Application\Command\CreateUser\CreateUserCommand;
 use App\Core\User\Application\Command\CreateUser\CreateUserHandler;
-use App\Core\User\Domain\Feature\UserCreationInterface;
+use App\Core\User\Domain\Feature\UserCreation\UserCreationInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Ulid;

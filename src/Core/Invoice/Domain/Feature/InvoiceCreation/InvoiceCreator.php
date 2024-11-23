@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Invoice\Application\Service;
+namespace App\Core\Invoice\Domain\Feature\InvoiceCreation;
 
 use App\Core\Common\Domain\ValueObject\Email;
-use App\Core\Invoice\Application\Service\Validation\InvoiceCreationValidationInterface;
 use App\Core\Invoice\Domain\Event\InvoiceCreatedEvent;
-use App\Core\Invoice\Domain\Feature\InvoiceCreationInterface;
+use App\Core\Invoice\Domain\Feature\InvoiceCreation\Validation\InvoiceCreationValidationInterface;
 use App\Core\Invoice\Domain\Invoice;
 use App\Core\Invoice\Domain\Repository\InvoiceWriteRepositoryInterface;
 use App\Core\Invoice\Domain\ValueObject\Amount;
@@ -16,7 +15,7 @@ use App\Core\User\Domain\User;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Uid\Ulid;
 
-final class InvoiceCreatorService implements InvoiceCreationInterface
+final class InvoiceCreator implements InvoiceCreationInterface
 {
     public function __construct(
         private readonly InvoiceWriteRepositoryInterface $invoiceWriteRepository,

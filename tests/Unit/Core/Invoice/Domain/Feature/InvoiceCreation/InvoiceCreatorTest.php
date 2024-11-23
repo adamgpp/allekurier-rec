@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Core\Invoice\Application\Service;
+namespace App\Tests\Unit\Core\Invoice\Domain\Feature\InvoiceCreation;
 
 use App\Core\Common\Domain\ValueObject\Email;
-use App\Core\Invoice\Application\Service\Exception\InvoiceCreationException;
-use App\Core\Invoice\Application\Service\InvoiceCreatorService;
-use App\Core\Invoice\Application\Service\Validation\InvoiceCreationValidationInterface;
 use App\Core\Invoice\Domain\Event\InvoiceCreatedEvent;
+use App\Core\Invoice\Domain\Feature\InvoiceCreation\Exception\InvoiceCreationException;
+use App\Core\Invoice\Domain\Feature\InvoiceCreation\InvoiceCreator;
+use App\Core\Invoice\Domain\Feature\InvoiceCreation\Validation\InvoiceCreationValidationInterface;
 use App\Core\Invoice\Domain\Invoice;
 use App\Core\Invoice\Domain\Repository\InvoiceWriteRepositoryInterface;
 use App\Core\Invoice\Domain\ValueObject\Amount;
@@ -19,13 +19,13 @@ use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Uid\Ulid;
 
-final class InvoiceCreatorServiceTest extends TestCase
+final class InvoiceCreatorTest extends TestCase
 {
     private InvoiceWriteRepositoryInterface&MockObject $invoiceWriteRepository;
     private UserWriteRepositoryInterface&MockObject $userRepository;
     private EventDispatcherInterface&MockObject $eventDispatcher;
     private InvoiceCreationValidationInterface&MockObject $invoiceCreationValidator;
-    private InvoiceCreatorService $invoiceCreatorService;
+    private InvoiceCreator $invoiceCreator;
 
     protected function setUp(): void
     {
@@ -34,7 +34,7 @@ final class InvoiceCreatorServiceTest extends TestCase
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $this->invoiceCreationValidator = $this->createMock(InvoiceCreationValidationInterface::class);
 
-        $this->invoiceCreatorService = new InvoiceCreatorService(
+        $this->invoiceCreator = new InvoiceCreator(
             $this->invoiceWriteRepository,
             $this->userRepository,
             $this->eventDispatcher,
@@ -71,7 +71,7 @@ final class InvoiceCreatorServiceTest extends TestCase
             ->method('dispatch')
             ->with(new InvoiceCreatedEvent($invoice));
 
-        $this->invoiceCreatorService->createInvoice($id, $userEmail, $amount);
+        $this->invoiceCreator->createInvoice($id, $userEmail, $amount);
     }
 
     public function testShouldFailWhenValidatorThrowsException(): void
@@ -88,6 +88,6 @@ final class InvoiceCreatorServiceTest extends TestCase
         $this->expectException(InvoiceCreationException::class);
         $this->expectExceptionMessage(InvoiceCreationException::invoiceWithIdAlreadyExists($id)->getMessage());
 
-        $this->invoiceCreatorService->createInvoice($id, $userEmail, $amount);
+        $this->invoiceCreator->createInvoice($id, $userEmail, $amount);
     }
 }

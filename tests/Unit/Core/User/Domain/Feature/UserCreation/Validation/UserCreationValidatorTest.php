@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Core\User\Application\Service\Validation;
+namespace App\Tests\Unit\Core\User\Domain\Feature\UserCreation\Validation;
 
 use App\Core\Common\Domain\ValueObject\Email;
-use App\Core\User\Application\Service\Exception\UserCreationException;
-use App\Core\User\Application\Service\Validation\UserCreationValidator;
+use App\Core\User\Domain\Feature\UserCreation\Exception\UserCreationException;
+use App\Core\User\Domain\Feature\UserCreation\Validation\UserCreationValidator;
 use App\Core\User\Domain\Repository\UserReadRepositoryInterface;
 use App\Core\User\Domain\Status\UserStatus;
 use PHPUnit\Framework\MockObject\MockObject;

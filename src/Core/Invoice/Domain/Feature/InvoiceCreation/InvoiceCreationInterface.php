@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Invoice\Domain\Feature;
+namespace App\Core\Invoice\Domain\Feature\InvoiceCreation;
 
 use App\Core\Common\Domain\ValueObject\Email;
 use App\Core\Invoice\Domain\ValueObject\Amount;
