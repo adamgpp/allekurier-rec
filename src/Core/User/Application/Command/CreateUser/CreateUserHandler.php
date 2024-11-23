@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Core\User\Application\Command\CreateUser;
 
-use App\Core\User\Domain\Feature\UserCreationInterface;
+use App\Core\User\Domain\Feature\UserCreation\UserCreationInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

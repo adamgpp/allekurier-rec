@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Invoice\Application\Service\Exception;
+namespace App\Core\Invoice\Domain\Feature\InvoiceCreation\Exception;
 
 use App\Core\Common\Domain\ValueObject\Email;
 use Symfony\Component\Uid\Ulid;

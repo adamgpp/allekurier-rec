@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Core\Invoice\Application\Service\Validation;
+namespace App\Tests\Unit\Core\Invoice\Domain\Feature\InvoiceCreation\Validation;
 
 use App\Core\Common\Domain\ValueObject\Email;
-use App\Core\Invoice\Application\Service\Exception\InvoiceCreationException;
-use App\Core\Invoice\Application\Service\Validation\InvoiceCreationValidator;
+use App\Core\Invoice\Domain\Feature\InvoiceCreation\Exception\InvoiceCreationException;
+use App\Core\Invoice\Domain\Feature\InvoiceCreation\Validation\InvoiceCreationValidator;
 use App\Core\Invoice\Domain\Repository\InvoiceReadRepositoryInterface;
 use App\Core\User\Domain\Repository\UserReadRepositoryInterface;
 use App\Core\User\Domain\Status\UserStatus;

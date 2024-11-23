@@ -5,7 +5,7 @@ namespace App\Tests\Unit\Core\Invoice\Application\Command\CreateInvoice;
 use App\Core\Common\Domain\ValueObject\Email;
 use App\Core\Invoice\Application\Command\CreateInvoice\CreateInvoiceCommand;
 use App\Core\Invoice\Application\Command\CreateInvoice\CreateInvoiceHandler;
-use App\Core\Invoice\Domain\Feature\InvoiceCreationInterface;
+use App\Core\Invoice\Domain\Feature\InvoiceCreation\InvoiceCreationInterface;
 use App\Core\Invoice\Domain\ValueObject\Amount;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

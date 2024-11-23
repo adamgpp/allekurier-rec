@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\User\Domain\Feature;
+namespace App\Core\User\Domain\Feature\UserCreation;
 
 use App\Core\Common\Domain\ValueObject\Email;
 use Symfony\Component\Uid\Ulid;

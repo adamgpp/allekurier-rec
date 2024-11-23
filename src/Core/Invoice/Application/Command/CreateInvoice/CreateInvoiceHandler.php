@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Core\Invoice\Application\Command\CreateInvoice;
 
-use App\Core\Invoice\Domain\Feature\InvoiceCreationInterface;
+use App\Core\Invoice\Domain\Feature\InvoiceCreation\InvoiceCreationInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
